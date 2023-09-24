@@ -14,6 +14,10 @@ public class Interaction {
         this.room = room;
     }
     
+    public String getDescription() {
+        return description;
+    }
+    
     public void examine(Player player, PrintStream stream) {
         stream.println(description);
     }

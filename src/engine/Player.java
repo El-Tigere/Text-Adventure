@@ -12,7 +12,7 @@ public class Player {
     }
     
     public void printInfo(PrintStream stream) {
-        stream.println(currentRoom.getDescription());
+        currentRoom.printDescription(stream);
     }
     
     public void executeCommand(String commandString, PrintStream stream) {

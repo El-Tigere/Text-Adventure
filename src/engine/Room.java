@@ -1,5 +1,6 @@
 package engine;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Room {
@@ -15,7 +16,12 @@ public class Room {
         interactions.add(interaction);
     }
     
-    public String getDescription() {
-        return description;
+    public void printDescription(PrintStream stream) {
+        stream.println(description);
+        
+        for(Interaction i : interactions) {
+            stream.println();
+            stream.println(i.getDescription());
+        }
     }
 }

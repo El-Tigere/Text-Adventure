@@ -7,7 +7,7 @@ public class Command {
         new Command("examine", 0) {
             @Override
             protected void execute(Player player, String[] params, PrintStream stream) {
-                stream.println("The player " + player.toString() + " examines their surroundings and finds nothing.");
+                player.printInfo(stream);
             }
         }
     };

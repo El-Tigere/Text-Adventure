@@ -3,8 +3,8 @@ package engine;
 import java.io.PrintStream;
 
 public class Player {
-    public Game game;
-    private String name;
+    public final Game game;
+    private final String name;
     private Room currentRoom;
     
     public Player(Game game, String name) {

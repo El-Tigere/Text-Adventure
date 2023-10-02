@@ -1,7 +1,7 @@
 package engine;
 
 public class Game {
-    private Room entryRoom;
+    private final Room entryRoom;
     
     public Game(Room entryRoom) {
         this.entryRoom = entryRoom;

@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Room {
-    private String description;
+    private final String description;
     private ArrayList<Interaction> interactions;
     
     public Room(String description) {

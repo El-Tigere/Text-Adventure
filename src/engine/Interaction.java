@@ -4,10 +4,10 @@ import java.io.PrintStream;
 
 public class Interaction {
     protected Room room;
-    private String name;
+    private final String name;
     
-    public Interaction(String description) {
-        this.name = description;
+    public Interaction(String name) {
+        this.name = name;
     }
     
     public void setRoom(Room room) {

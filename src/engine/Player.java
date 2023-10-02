@@ -4,11 +4,17 @@ import java.io.PrintStream;
 
 public class Player {
     public Game game;
+    private String name;
     private Room currentRoom;
     
-    public Player(Game game) {
+    public Player(Game game, String name) {
         this.game = game;
+        this.name = name;
         currentRoom = game.getEntryRoom();
+    }
+    
+    public String getName() {
+        return name;
     }
     
     public void printInfo(PrintStream stream) {

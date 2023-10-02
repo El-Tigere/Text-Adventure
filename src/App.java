@@ -8,7 +8,7 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         Game game = new Game(Rooms.ENTRY_ROOM);
-        Player player = new Player(game);
+        Player player = new Player(game, "Test-Player");
         player.printInfo(System.out);
         
         Scanner inputScanner = new Scanner(System.in);

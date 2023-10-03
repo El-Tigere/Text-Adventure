@@ -12,8 +12,8 @@ public class Command {
         }
     };
     
-    private String commandName;
-    protected int paramCount;
+    private final String commandName;
+    protected final int paramCount;
     
     private Command(String commandName, int paramCount) {
         this.commandName = commandName;

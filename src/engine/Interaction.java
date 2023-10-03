@@ -14,7 +14,7 @@ public class Interaction {
         this.room = room;
     }
     
-    public String getDescription() {
+    public String getName() {
         return name;
     }
     

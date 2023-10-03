@@ -21,7 +21,7 @@ public class Room {
         
         for(Interaction i : interactions) {
             stream.println();
-            stream.println(i.getDescription());
+            stream.println(i.getName());
         }
     }
 }

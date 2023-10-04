@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 public class Interaction {
     protected Room room;
-    private final String name;
+    protected final String name;
     
     public Interaction(String name) {
         this.name = name;
@@ -14,8 +14,8 @@ public class Interaction {
         this.room = room;
     }
     
-    public String getName() {
-        return name;
+    public void printShortDescription(PrintStream stream) {
+        stream.println(name);
     }
     
     public void examine(Player player, PrintStream stream) {

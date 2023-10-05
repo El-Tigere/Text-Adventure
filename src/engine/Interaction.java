@@ -4,7 +4,7 @@ import java.io.PrintStream;
 
 public class Interaction {
     protected Room room;
-    protected final String name;
+    public final String name;
     
     public Interaction(String name) {
         this.name = name;

@@ -10,6 +10,10 @@ public class ItemInteraction extends Interaction {
         this.item = item;
     }
     
+    public Item getItem() {
+        return item;
+    }
+    
     @Override
     public void printShortDescription(PrintStream stream) {
         stream.print("You see a ");

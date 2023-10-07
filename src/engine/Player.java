@@ -1,20 +1,31 @@
 package engine;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 public class Player {
     public final Game game;
     private final String name;
+    private ArrayList<Item> inventory;
     private Room currentRoom;
     
     public Player(Game game, String name) {
         this.game = game;
         this.name = name;
+        inventory = new ArrayList<>();
         currentRoom = game.getEntryRoom();
     }
     
     public String getName() {
-        return name;
+        return name; 
+    }
+    
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+    
+    public void addItem(Item item) {
+        inventory.add(item);
     }
     
     public void printInfo(PrintStream stream) {

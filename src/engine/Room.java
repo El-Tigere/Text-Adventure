@@ -16,6 +16,23 @@ public class Room {
         interactions.add(interaction);
     }
     
+    public void removeInteraction(Interaction interaction) {
+        interactions.remove(interaction);
+    }
+    
+    public Item takeItemIfPresent(String name) {
+        Interaction target = null;
+        for(Interaction i : interactions) {
+            if(i instanceof ItemInteraction && i.name.equalsIgnoreCase(name)) {
+                target = i;
+                break;
+            }
+        }
+        if(target == null) return null;
+        interactions.remove(target);
+        return ((ItemInteraction) target).getItem();
+    }
+    
     public void printDescription(PrintStream stream) {
         stream.println(description);
         

@@ -9,6 +9,22 @@ public class Command {
             protected void execute(Player player, String[] params, PrintStream stream) {
                 player.printInfo(stream);
             }
+        },
+        new Command("take", 0) {
+            @Override
+            protected void execute(Player player, String[] params, PrintStream stream) {
+                if(params.length < 1) {
+                    stream.println("What do you want to take?");
+                    return;
+                }
+                Item item = player.getCurrentRoom().takeItemIfPresent(params[0]);
+                if(item == null) {
+                    stream.println("There is no " + params[0] + " here.");
+                    return;
+                }
+                player.addItem(item);
+                stream.println("You took the " + params[0] + ".");
+            }
         }
     };
     

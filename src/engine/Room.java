@@ -20,6 +20,17 @@ public class Room {
         interactions.remove(interaction);
     }
     
+    public Interaction getInteraction(String name) {
+        Interaction target = null;
+        for(Interaction i : interactions) {
+            if(i.name.equalsIgnoreCase(name)) {
+                target = i;
+                break;
+            }
+        }
+        return target;
+    }
+    
     public Item takeItemIfPresent(String name) {
         Interaction target = null;
         for(Interaction i : interactions) {

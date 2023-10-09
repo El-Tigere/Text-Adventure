@@ -1,6 +1,7 @@
 package engine;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
@@ -24,6 +25,19 @@ public class Command {
                 }
                 player.addItem(item);
                 stream.println("You took the " + params[0] + ".");
+            }
+        },
+        new Command("inventory", 0) {
+            @Override
+            protected void execute(Player player, String[] params, PrintStream stream) {
+                ArrayList<Item> inventory = player.getInventory();
+                
+                if(inventory.isEmpty()) stream.println("You currently have no items.");
+                else stream.println("You currently have the following items:");
+                
+                for(Item i : inventory) {
+                    stream.println(i.getName());
+                }
             }
         }
     };

@@ -23,6 +23,6 @@ public class ItemInteraction extends Interaction {
     
     @Override
     public void examine(Player player, PrintStream stream) {
-        stream.print(item.getDescription());
+        stream.println(item.getDescription());
     }
 }

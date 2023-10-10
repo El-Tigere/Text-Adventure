@@ -8,15 +8,32 @@ public class Command {
         new Command("examine", 0) {
             @Override
             protected void execute(Player player, String[] params, PrintStream stream) {
+                // examine room
                 if(params.length < 1) {
                     player.printInfo(stream);
                     return;
                 }
+                
+                // examine interaction
                 Interaction interaction = player.getCurrentRoom().getInteraction(params[0]);
                 if(interaction != null) {
                     interaction.examine(player, stream);
                     return;
                 }
+                
+                // examine item in inventory
+                Item item = null;
+                for(Item i : player.getInventory()) {
+                    if(i.getName().equals(params[0])) {
+                        item = i;
+                        break;
+                    }
+                }
+                if(item != null) {
+                    stream.println(item.getDescription());
+                    return;
+                }
+                
                 stream.println("You can't find a " + params[0] + " here.");
                 return;
             }

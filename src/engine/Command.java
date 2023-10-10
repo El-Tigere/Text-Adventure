@@ -8,7 +8,17 @@ public class Command {
         new Command("examine", 0) {
             @Override
             protected void execute(Player player, String[] params, PrintStream stream) {
-                player.printInfo(stream);
+                if(params.length < 1) {
+                    player.printInfo(stream);
+                    return;
+                }
+                Interaction interaction = player.getCurrentRoom().getInteraction(params[0]);
+                if(interaction != null) {
+                    interaction.examine(player, stream);
+                    return;
+                }
+                stream.println("You can't find a " + params[0] + " here.");
+                return;
             }
         },
         new Command("take", 0) {

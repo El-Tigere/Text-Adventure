@@ -3,6 +3,9 @@ package engine;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import engine.interactions.Interaction;
+import engine.interactions.ItemInteraction;
+
 public class Room {
     private final String description;
     private ArrayList<Interaction> interactions;

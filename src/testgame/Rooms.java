@@ -1,8 +1,8 @@
 package testgame;
 
-import engine.Interaction;
-import engine.ItemInteraction;
 import engine.Room;
+import engine.interactions.Interaction;
+import engine.interactions.ItemInteraction;
 
 public class Rooms {
     public static final Room ENTRY_ROOM = new Room("You are in an empty room.");

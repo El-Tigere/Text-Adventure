@@ -1,6 +1,9 @@
-package engine;
+package engine.interactions;
 
 import java.io.PrintStream;
+
+import engine.Player;
+import engine.Room;
 
 public class Interaction {
     protected Room room;

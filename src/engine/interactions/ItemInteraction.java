@@ -1,6 +1,9 @@
-package engine;
+package engine.interactions;
 
 import java.io.PrintStream;
+
+import engine.Item;
+import engine.Player;
 
 public class ItemInteraction extends Interaction {
     private final Item item;

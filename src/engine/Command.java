@@ -3,6 +3,8 @@ package engine;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import engine.interactions.Interaction;
+
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
         new Command("examine", 0) {

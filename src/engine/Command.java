@@ -9,15 +9,15 @@ public class Command {
     private static final Command[] COMMANDS = new Command[] {
         new Command("examine", 0) {
             @Override
-            protected void execute(Player player, String[] params, PrintStream stream) {
+            protected void execute(Player player, String params, PrintStream stream) {
                 // examine room
-                if(params.length < 1) {
+                if(params == null) {
                     player.printInfo(stream);
                     return;
                 }
                 
                 // examine interaction
-                Interaction interaction = player.getCurrentRoom().getInteraction(params[0]);
+                Interaction interaction = player.getCurrentRoom().getInteraction(params);
                 if(interaction != null) {
                     interaction.examine(player, stream);
                     return;
@@ -26,7 +26,7 @@ public class Command {
                 // examine item in inventory
                 Item item = null;
                 for(Item i : player.getInventory()) {
-                    if(i.getName().equals(params[0])) {
+                    if(i.getName().equals(params)) {
                         item = i;
                         break;
                     }
@@ -36,29 +36,29 @@ public class Command {
                     return;
                 }
                 
-                stream.println("You can't find a " + params[0] + " here.");
+                stream.println("You can't find a " + params + " here.");
                 return;
             }
         },
         new Command("take", 0) {
             @Override
-            protected void execute(Player player, String[] params, PrintStream stream) {
-                if(params.length < 1) {
+            protected void execute(Player player, String params, PrintStream stream) {
+                if(params == null) {
                     stream.println("What do you want to take?");
                     return;
                 }
-                Item item = player.getCurrentRoom().takeItemIfPresent(params[0]);
+                Item item = player.getCurrentRoom().takeItemIfPresent(params);
                 if(item == null) {
-                    stream.println("There is no " + params[0] + " here.");
+                    stream.println("There is no " + params + " here.");
                     return;
                 }
                 player.addItem(item);
-                stream.println("You took the " + params[0] + ".");
+                stream.println("You took the " + params + ".");
             }
         },
         new Command("inventory", 0) {
             @Override
-            protected void execute(Player player, String[] params, PrintStream stream) {
+            protected void execute(Player player, String params, PrintStream stream) {
                 ArrayList<Item> inventory = player.getInventory();
                 
                 if(inventory.isEmpty()) stream.println("You currently have no items.");
@@ -80,11 +80,10 @@ public class Command {
     }
     
     public static void executeString(Player player, String commandString, PrintStream stream) {
-        String[] parts = commandString.split(" ");
+        String[] parts = commandString.split(" ", 2);
         if(parts.length <= 0) return;
         
-        String[] params = new String[parts.length - 1];
-        System.arraycopy(parts, 1, params, 0, parts.length - 1);
+        String params = parts.length > 1 ? parts[1] : null;
         
         for(Command c : COMMANDS) {
             if(c.commandName.equals(parts[0])) {
@@ -96,10 +95,8 @@ public class Command {
         stream.println("Unknown command.");
     }
     
-    protected void execute(Player player, String[] params, PrintStream stream) {
+    protected void execute(Player player, String params, PrintStream stream) {
         stream.println(commandName + " was executed with these parameters:");
-        for(String s : params) {
-            stream.println(s);
-        }
+        stream.println(params);
     }
 }

@@ -7,7 +7,7 @@ import engine.interactions.Interaction;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
-        new Command("examine", 0) {
+        new Command("examine") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 // examine room
@@ -40,7 +40,7 @@ public class Command {
                 return;
             }
         },
-        new Command("take", 0) {
+        new Command("take") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 if(params == null) {
@@ -56,7 +56,7 @@ public class Command {
                 stream.println("You took the " + params + ".");
             }
         },
-        new Command("inventory", 0) {
+        new Command("inventory") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 ArrayList<Item> inventory = player.getInventory();
@@ -72,11 +72,9 @@ public class Command {
     };
     
     private final String commandName;
-    protected final int paramCount;
     
-    private Command(String commandName, int paramCount) {
+    private Command(String commandName) {
         this.commandName = commandName;
-        this.paramCount = paramCount;
     }
     
     public static void executeString(Player player, String commandString, PrintStream stream) {

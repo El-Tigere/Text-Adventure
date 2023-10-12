@@ -3,6 +3,7 @@ package engine;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import engine.interactions.DoorInteraction;
 import engine.interactions.Interaction;
 
 public class Command {
@@ -67,6 +68,28 @@ public class Command {
                 for(Item i : inventory) {
                     stream.println(i.getName());
                 }
+            }
+        },
+        new Command("enter") {
+            @Override
+            protected void execute(Player player, String params, PrintStream stream) {
+                if(params == null) {
+                    stream.println("Where do you want to go?");
+                    return;
+                }
+                Interaction interaction = player.getCurrentRoom().getInteraction(params);
+                if(interaction == null) {
+                    stream.println("There is no " + params + " here.");
+                    return;
+                }
+                if(interaction instanceof DoorInteraction) {
+                    Room targetRoom = ((DoorInteraction) interaction).getRoom();
+                    player.setCurrentRoom(targetRoom);
+                    stream.println("You entered the " + params + ".");
+                    targetRoom.printDescription(stream);
+                    return;
+                }
+                stream.println("You can't enter the " + params + ".");
             }
         }
     };

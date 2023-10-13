@@ -14,9 +14,11 @@ public class App {
         Scanner inputScanner = new Scanner(System.in);
         String input;
         while(true) {
+            System.out.println("================================================================");
             System.out.println("What do you want to do?");
             input = inputScanner.nextLine();
             if(input.equals("exit")) break;
+            System.out.println();
             player.executeCommand(input, System.out);
         }
         

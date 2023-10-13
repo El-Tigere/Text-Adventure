@@ -50,7 +50,11 @@ public class Command {
                 }
                 Item item = player.getCurrentRoom().takeItemIfPresent(params);
                 if(item == null) {
-                    stream.println("There is no " + params + " here.");
+                    if(player.getCurrentRoom().getInteraction(params) != null) {
+                        stream.println("You can't pick up the " + params + ".");
+                    } else {
+                        stream.println("There is no " + params + " here.");
+                    }
                     return;
                 }
                 player.addItem(item);

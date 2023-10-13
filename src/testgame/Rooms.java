@@ -2,7 +2,6 @@ package testgame;
 
 import engine.Room;
 import engine.interactions.DoorInteraction;
-import engine.interactions.Interaction;
 import engine.interactions.ItemInteraction;
 
 public class Rooms {
@@ -10,7 +9,6 @@ public class Rooms {
     public static final Room LIBRARY = new Room("You are in a large library with bookshelves that reach up to the cieling.");
     
     static {
-        ENTRY_ROOM.addInteraction(new Interaction("abc"));
         ENTRY_ROOM.addInteraction(new ItemInteraction(Items.BRICK));
         ENTRY_ROOM.addInteraction(new DoorInteraction("wide wooden door", LIBRARY));
         

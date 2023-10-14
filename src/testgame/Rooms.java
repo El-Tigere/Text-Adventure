@@ -3,6 +3,7 @@ package testgame;
 import engine.Room;
 import engine.interactions.DoorInteraction;
 import engine.interactions.ItemInteraction;
+import engine.interactions.NPCInteraction;
 
 public class Rooms {
     public static final Room ENTRY_ROOM = new Room("You are in an empty room.");
@@ -13,5 +14,6 @@ public class Rooms {
         ENTRY_ROOM.addInteraction(new DoorInteraction("wide wooden door", LIBRARY));
         
         LIBRARY.addInteraction(new DoorInteraction("wide wooden door", ENTRY_ROOM));
+        LIBRARY.addInteraction(new NPCInteraction("Carl the librarian"));
     }
 }

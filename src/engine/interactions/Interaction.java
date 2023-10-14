@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import engine.Player;
 import engine.Room;
 
-public class Interaction {
+public abstract class Interaction {
     protected Room room;
     public final String name;
     
@@ -21,7 +21,5 @@ public class Interaction {
         stream.println(name);
     }
     
-    public void examine(Player player, PrintStream stream) {
-        stream.println(name);
-    }
+    public abstract void examine(Player player, PrintStream stream);
 }

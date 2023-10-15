@@ -14,6 +14,8 @@ public class Rooms {
         ENTRY_ROOM.addInteraction(new DoorInteraction("wide wooden door", LIBRARY));
         
         LIBRARY.addInteraction(new DoorInteraction("wide wooden door", ENTRY_ROOM));
-        LIBRARY.addInteraction(new NPCInteraction("Carl the librarian"));
+        LIBRARY.addInteraction(new NPCInteraction("Carl the librarian", (player, stream) -> {
+            stream.println("Hello.");
+        }));
     }
 }

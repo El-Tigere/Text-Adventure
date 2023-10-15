@@ -51,7 +51,7 @@ public class Command {
                 Item item = player.getCurrentRoom().takeItemIfPresent(params);
                 if(item == null) {
                     if(player.getCurrentRoom().getInteraction(params) != null) {
-                        stream.println("You can't pick up the " + params + ".");
+                        stream.println("You can't pick that up.");
                     } else {
                         stream.println("There is no " + params + " here.");
                     }
@@ -93,7 +93,7 @@ public class Command {
                     targetRoom.printDescription(stream);
                     return;
                 }
-                stream.println("You can't enter the " + params + ".");
+                stream.println("You can't enter that.");
             }
         }
     };

@@ -5,8 +5,11 @@ import java.io.PrintStream;
 import engine.Player;
 
 public class NPCInteraction extends Interaction {
-    public NPCInteraction(String name) {
+    final INPCInteractionDialogue dialogue;
+    
+    public NPCInteraction(String name, INPCInteractionDialogue dialogue) {
         super(name);
+        this.dialogue = dialogue;
     }
     
     @Override
@@ -21,5 +24,14 @@ public class NPCInteraction extends Interaction {
         stream.print("You see ");
         stream.print(name);
         stream.println(".");
+    }
+    
+    public void talk(Player player, PrintStream stream) {
+        dialogue.talk(player, stream);
+    }
+    
+    @FunctionalInterface
+    public interface INPCInteractionDialogue {
+        public void talk(Player player, PrintStream stream);
     }
 }

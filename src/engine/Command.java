@@ -115,6 +115,17 @@ public class Command {
                 }
                 stream.println("*no answer*");
             }
+        },
+        new Command("help", "get a list of all available commands") {
+            @Override
+            protected void execute(Player player, String params, PrintStream stream) {
+                stream.println("You can use the following commands:");
+                for(Command c : COMMANDS) {
+                    stream.print(c.commandName);
+                    stream.print(" - ");
+                    stream.println(c.description);
+                }
+            }
         }
     };
     

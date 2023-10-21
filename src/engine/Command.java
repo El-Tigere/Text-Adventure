@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import engine.interactions.DoorInteraction;
 import engine.interactions.Interaction;
+import engine.interactions.NPCInteraction;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
@@ -94,6 +95,25 @@ public class Command {
                     return;
                 }
                 stream.println("You can't enter that.");
+            }
+        },
+        new Command("talk") {
+            @Override
+            protected void execute(Player player, String params, PrintStream stream) {
+                if(params == null) {
+                    stream.println("Who do you want to talk to?");
+                    return;
+                }
+                Interaction interaction = player.getCurrentRoom().getInteraction(params);
+                if(interaction == null) {
+                    stream.println(params + " is not here.");
+                    return;
+                }
+                if(interaction instanceof NPCInteraction) {
+                    ((NPCInteraction) interaction).talk(player, stream);
+                    return;
+                }
+                stream.println("*no answer*");
             }
         }
     };

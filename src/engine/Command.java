@@ -9,7 +9,7 @@ import engine.interactions.NPCInteraction;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
-        new Command("examine") {
+        new Command("examine", "get more information about something") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 // examine room
@@ -42,7 +42,7 @@ public class Command {
                 return;
             }
         },
-        new Command("take") {
+        new Command("take", "pick up an item") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 if(params == null) {
@@ -62,7 +62,7 @@ public class Command {
                 stream.println("You took the " + params + ".");
             }
         },
-        new Command("inventory") {
+        new Command("inventory", "see the items in your inventory") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 ArrayList<Item> inventory = player.getInventory();
@@ -75,7 +75,7 @@ public class Command {
                 }
             }
         },
-        new Command("enter") {
+        new Command("enter", "go to another room by entering a passage") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 if(params == null) {
@@ -97,7 +97,7 @@ public class Command {
                 stream.println("You can't enter that.");
             }
         },
-        new Command("talk") {
+        new Command("talk", "talk to someone") {
             @Override
             protected void execute(Player player, String params, PrintStream stream) {
                 if(params == null) {
@@ -119,9 +119,11 @@ public class Command {
     };
     
     private final String commandName;
+    private final String description;
     
-    private Command(String commandName) {
+    private Command(String commandName, String description) {
         this.commandName = commandName;
+        this.description = description;
     }
     
     public static void executeString(Player player, String commandString, PrintStream stream) {

@@ -28,7 +28,7 @@ public class Command {
                 // examine item in inventory
                 Item item = null;
                 for(Item i : player.getInventory()) {
-                    if(i.getName().equals(params)) {
+                    if(i.getName().equalsIgnoreCase(params)) {
                         item = i;
                         break;
                     }

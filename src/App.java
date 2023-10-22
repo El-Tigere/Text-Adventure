@@ -15,7 +15,7 @@ public class App {
         String input;
         while(true) {
             System.out.println("================================================================");
-            System.out.println("What do you want to do?");
+            System.out.print("> ");
             input = inputScanner.nextLine();
             if(input.equals("exit")) break;
             System.out.println();

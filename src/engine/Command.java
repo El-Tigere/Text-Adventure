@@ -103,7 +103,7 @@ public class Command {
         }),
         new Command("help", "get a list of all available commands", (Player player, String params, PrintStream stream) -> {
             stream.println("You can use the following commands:");
-            for(Command c : COMMANDS) {
+            for(Command c : getCommands()) {
                 stream.print(c.commandName);
                 stream.print(" - ");
                 stream.println(c.description);
@@ -119,6 +119,10 @@ public class Command {
         this.commandName = commandName;
         this.description = description;
         this.function = function;
+    }
+    
+    private static Command[] getCommands() {
+        return COMMANDS;
     }
     
     public static void executeString(Player player, String commandString, PrintStream stream) {

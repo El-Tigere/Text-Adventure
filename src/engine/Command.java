@@ -9,132 +9,116 @@ import engine.interactions.NPCInteraction;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
-        new Command("examine", "get more information about something") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                // examine room
-                if(params == null) {
-                    player.printInfo(stream);
-                    return;
-                }
-                
-                // examine interaction
-                Interaction interaction = player.getCurrentRoom().getInteraction(params);
-                if(interaction != null) {
-                    interaction.examine(player, stream);
-                    return;
-                }
-                
-                // examine item in inventory
-                Item item = null;
-                for(Item i : player.getInventory()) {
-                    if(i.getName().equalsIgnoreCase(params)) {
-                        item = i;
-                        break;
-                    }
-                }
-                if(item != null) {
-                    stream.println(item.getDescription());
-                    return;
-                }
-                
-                stream.println("You can't find a " + params + " here.");
+        new Command("examine", "get more information about something", (Player player, String params, PrintStream stream) -> {
+            // examine room
+            if(params == null) {
+                player.printInfo(stream);
                 return;
             }
-        },
-        new Command("take", "pick up an item") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                if(params == null) {
-                    stream.println("What do you want to take?");
-                    return;
-                }
-                Item item = player.getCurrentRoom().takeItemIfPresent(params);
-                if(item == null) {
-                    if(player.getCurrentRoom().getInteraction(params) != null) {
-                        stream.println("You can't pick that up.");
-                    } else {
-                        stream.println("There is no " + params + " here.");
-                    }
-                    return;
-                }
-                player.addItem(item);
-                stream.println("You took the " + params + ".");
+            
+            // examine interaction
+            Interaction interaction = player.getCurrentRoom().getInteraction(params);
+            if(interaction != null) {
+                interaction.examine(player, stream);
+                return;
             }
-        },
-        new Command("inventory", "see the items in your inventory") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                ArrayList<Item> inventory = player.getInventory();
-                
-                if(inventory.isEmpty()) stream.println("You currently have no items.");
-                else stream.println("You currently have the following items:");
-                
-                for(Item i : inventory) {
-                    stream.println(i.getName());
+            
+            // examine item in inventory
+            Item item = null;
+            for(Item i : player.getInventory()) {
+                if(i.getName().equalsIgnoreCase(params)) {
+                    item = i;
+                    break;
                 }
             }
-        },
-        new Command("enter", "go to another room by entering a passage") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                if(params == null) {
-                    stream.println("Where do you want to go?");
-                    return;
-                }
-                Interaction interaction = player.getCurrentRoom().getInteraction(params);
-                if(interaction == null) {
+            if(item != null) {
+                stream.println(item.getDescription());
+                return;
+            }
+            
+            stream.println("You can't find a " + params + " here.");
+            return;
+        }),
+        new Command("take", "pick up an item", (Player player, String params, PrintStream stream) -> {
+            if(params == null) {
+                stream.println("What do you want to take?");
+                return;
+            }
+            Item item = player.getCurrentRoom().takeItemIfPresent(params);
+            if(item == null) {
+                if(player.getCurrentRoom().getInteraction(params) != null) {
+                    stream.println("You can't pick that up.");
+                } else {
                     stream.println("There is no " + params + " here.");
-                    return;
                 }
-                if(interaction instanceof DoorInteraction) {
-                    Room targetRoom = ((DoorInteraction) interaction).getRoom();
-                    player.setCurrentRoom(targetRoom);
-                    stream.println("You entered the " + params + ".");
-                    targetRoom.printDescription(stream);
-                    return;
-                }
-                stream.println("You can't enter that.");
+                return;
             }
-        },
-        new Command("talk", "talk to someone") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                if(params == null) {
-                    stream.println("Who do you want to talk to?");
-                    return;
-                }
-                Interaction interaction = player.getCurrentRoom().getInteraction(params);
-                if(interaction == null) {
-                    stream.println(params + " is not here.");
-                    return;
-                }
-                if(interaction instanceof NPCInteraction) {
-                    ((NPCInteraction) interaction).talk(player, stream);
-                    return;
-                }
-                stream.println("*no answer*");
+            player.addItem(item);
+            stream.println("You took the " + params + ".");
+        }),
+        new Command("inventory", "see the items in your inventory", (Player player, String params, PrintStream stream) -> {
+            ArrayList<Item> inventory = player.getInventory();
+            
+            if(inventory.isEmpty()) stream.println("You currently have no items.");
+            else stream.println("You currently have the following items:");
+            
+            for(Item i : inventory) {
+                stream.println(i.getName());
             }
-        },
-        new Command("help", "get a list of all available commands") {
-            @Override
-            protected void execute(Player player, String params, PrintStream stream) {
-                stream.println("You can use the following commands:");
-                for(Command c : COMMANDS) {
-                    stream.print(c.commandName);
-                    stream.print(" - ");
-                    stream.println(c.description);
-                }
+        }),
+        new Command("enter", "go to another room by entering a passage", (Player player, String params, PrintStream stream) -> {
+            if(params == null) {
+                stream.println("Where do you want to go?");
+                return;
             }
-        }
+            Interaction interaction = player.getCurrentRoom().getInteraction(params);
+            if(interaction == null) {
+                stream.println("There is no " + params + " here.");
+                return;
+            }
+            if(interaction instanceof DoorInteraction) {
+                Room targetRoom = ((DoorInteraction) interaction).getRoom();
+                player.setCurrentRoom(targetRoom);
+                stream.println("You entered the " + params + ".");
+                targetRoom.printDescription(stream);
+                return;
+            }
+            stream.println("You can't enter that.");
+        }),
+        new Command("talk", "talk to someone", (Player player, String params, PrintStream stream) -> {
+            if(params == null) {
+                stream.println("Who do you want to talk to?");
+                return;
+            }
+            Interaction interaction = player.getCurrentRoom().getInteraction(params);
+            if(interaction == null) {
+                stream.println(params + " is not here.");
+                return;
+            }
+            if(interaction instanceof NPCInteraction) {
+                ((NPCInteraction) interaction).talk(player, stream);
+                return;
+            }
+            stream.println("*no answer*");
+        }),
+        new Command("help", "get a list of all available commands", (Player player, String params, PrintStream stream) -> {
+            stream.println("You can use the following commands:");
+            for(Command c : COMMANDS) {
+                stream.print(c.commandName);
+                stream.print(" - ");
+                stream.println(c.description);
+            }
+        })
     };
     
     private final String commandName;
     private final String description;
+    private final CommandFunction function;
     
-    private Command(String commandName, String description) {
+    private Command(String commandName, String description, CommandFunction function) {
         this.commandName = commandName;
         this.description = description;
+        this.function = function;
     }
     
     public static void executeString(Player player, String commandString, PrintStream stream) {
@@ -154,7 +138,11 @@ public class Command {
     }
     
     protected void execute(Player player, String params, PrintStream stream) {
-        stream.println(commandName + " was executed with these parameters:");
-        stream.println(params);
+        function.execute(player, params, stream);
+    }
+    
+    @FunctionalInterface
+    private static interface CommandFunction {
+        public void execute(Player player, String params, PrintStream stream);
     }
 }

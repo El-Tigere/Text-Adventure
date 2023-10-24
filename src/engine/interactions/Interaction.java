@@ -17,9 +17,7 @@ public abstract class Interaction {
         this.room = room;
     }
     
-    public void printShortDescription(PrintStream stream) {
-        stream.println(name);
-    }
+    public abstract void printShortDescription(PrintStream stream);
     
     public abstract void examine(Player player, PrintStream stream);
 }

@@ -2,6 +2,7 @@ package engine.interactions;
 
 import java.io.PrintStream;
 
+import engine.Ansi;
 import engine.Player;
 import engine.Room;
 
@@ -20,7 +21,7 @@ public class DoorInteraction extends Interaction {
     @Override
     public void printShortDescription(PrintStream stream) {
         stream.print("You see a ");
-        stream.print(name);
+        stream.print(Ansi.bold(name));
         stream.println(".");
     }
     

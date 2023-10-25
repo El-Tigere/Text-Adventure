@@ -2,6 +2,7 @@ package engine.interactions;
 
 import java.io.PrintStream;
 
+import engine.Ansi;
 import engine.Item;
 import engine.Player;
 
@@ -20,7 +21,7 @@ public class ItemInteraction extends Interaction {
     @Override
     public void printShortDescription(PrintStream stream) {
         stream.print("You see a ");
-        stream.print(name);
+        stream.print(Ansi.bold(name));
         stream.println(" lying on the floor.");
     }
     

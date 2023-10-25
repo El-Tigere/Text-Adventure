@@ -2,6 +2,7 @@ package engine.interactions;
 
 import java.io.PrintStream;
 
+import engine.Ansi;
 import engine.Player;
 
 public class NPCInteraction extends Interaction {
@@ -15,7 +16,7 @@ public class NPCInteraction extends Interaction {
     @Override
     public void printShortDescription(PrintStream stream) {
         stream.print("You see ");
-        stream.print(name);
+        stream.print(Ansi.bold(name));
         stream.println(".");
     }
     

@@ -1,5 +1,6 @@
 package testgame;
 
+import engine.Ansi;
 import engine.Room;
 import engine.interactions.DoorInteraction;
 import engine.interactions.ItemInteraction;
@@ -15,7 +16,8 @@ public class Rooms {
         
         LIBRARY.addInteraction(new DoorInteraction("wide wooden door", ENTRY_ROOM));
         LIBRARY.addInteraction(new NPCInteraction("Carl the librarian", (player, stream) -> {
-            stream.println("Hello.");
+            stream.println("Hello. Please Take this book.\n" + Ansi.italic("Carl gives you a ") + Ansi.bold("book") + Ansi.italic("."));
+            player.addItem(Items.BOOK);
         }));
     }
 }

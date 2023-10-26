@@ -104,7 +104,7 @@ public class Command {
         new Command("help", "get a list of all available commands", (Player player, String params, PrintStream stream) -> {
             stream.println("You can use the following commands:");
             for(Command c : getCommands()) {
-                stream.print(c.commandName);
+                stream.print(Ansi.bold(c.commandName));
                 stream.print(" - ");
                 stream.println(c.description);
             }

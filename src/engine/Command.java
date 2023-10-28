@@ -9,7 +9,7 @@ import engine.interactions.NPCInteraction;
 
 public class Command {
     private static final Command[] COMMANDS = new Command[] {
-        new Command("examine", "get more information about something", (Player player, String params, PrintStream stream) -> {
+        new Command("examine", "get more information about something", (player, params, stream) -> {
             // examine room
             if(params == null) {
                 player.printInfo(stream);
@@ -39,7 +39,7 @@ public class Command {
             stream.println("You can't find a " + params + " here.");
             return;
         }),
-        new Command("take", "pick up an item", (Player player, String params, PrintStream stream) -> {
+        new Command("take", "pick up an item", (player, params, stream) -> {
             if(params == null) {
                 stream.println("What do you want to take?");
                 return;
@@ -56,7 +56,7 @@ public class Command {
             player.addItem(item);
             stream.println("You took the " + params + ".");
         }),
-        new Command("inventory", "see the items in your inventory", (Player player, String params, PrintStream stream) -> {
+        new Command("inventory", "see the items in your inventory", (player, params, stream) -> {
             ArrayList<Item> inventory = player.getInventory();
             
             if(inventory.isEmpty()) stream.println("You currently have no items.");
@@ -66,7 +66,7 @@ public class Command {
                 stream.println(i.getName());
             }
         }),
-        new Command("enter", "go to another room by entering a passage", (Player player, String params, PrintStream stream) -> {
+        new Command("enter", "go to another room by entering a passage", (player, params, stream) -> {
             if(params == null) {
                 stream.println("Where do you want to go?");
                 return;
@@ -85,7 +85,7 @@ public class Command {
             }
             stream.println("You can't enter that.");
         }),
-        new Command("talk", "talk to someone", (Player player, String params, PrintStream stream) -> {
+        new Command("talk", "talk to someone", (player, params, stream) -> {
             if(params == null) {
                 stream.println("Who do you want to talk to?");
                 return;
@@ -101,7 +101,7 @@ public class Command {
             }
             stream.println("*no answer*");
         }),
-        new Command("help", "get a list of all available commands", (Player player, String params, PrintStream stream) -> {
+        new Command("help", "get a list of all available commands", (player, params, stream) -> {
             stream.println("You can use the following commands:");
             for(Command c : getCommands()) {
                 stream.print(Ansi.bold(c.commandName));

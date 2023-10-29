@@ -17,7 +17,7 @@ public class Rooms {
         LIBRARY.addInteraction(new DoorInteraction("wide wooden door", ENTRY_ROOM));
         LIBRARY.addInteraction(new NPCInteraction("Carl the librarian", (player, stream) -> {
             stream.println("Hello. Please Take this book.\n" + Ansi.italic("Carl gives you a ") + Ansi.bold("book") + Ansi.italic("."));
-            player.addItem(Items.BOOK);
+            player.getInventory().add(Items.BOOK);
         }, (player, item, stream) -> {
             if(item.equals(Items.BRICK)) {
                 stream.println("Thak you! That's exactly what I need.");

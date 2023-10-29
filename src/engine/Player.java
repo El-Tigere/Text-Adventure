@@ -32,10 +32,6 @@ public class Player {
         return inventory;
     }
     
-    public void addItem(Item item) {
-        inventory.add(item);
-    }
-    
     public void printInfo(PrintStream stream) {
         currentRoom.printDescription(stream);
     }

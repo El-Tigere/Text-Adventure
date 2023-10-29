@@ -53,7 +53,7 @@ public class Command {
                 }
                 return null;
             }
-            player.addItem(item);
+            player.getInventory().add(item);
             stream.println("You took the " + params + ".");
             return null;
         }),

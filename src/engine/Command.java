@@ -13,14 +13,14 @@ public class Command {
             // examine room
             if(params == null) {
                 player.printInfo(stream);
-                return;
+                return null;
             }
             
             // examine interaction
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
             if(interaction != null) {
                 interaction.examine(player, stream);
-                return;
+                return null;
             }
             
             // examine item in inventory
@@ -33,16 +33,16 @@ public class Command {
             }
             if(item != null) {
                 stream.println(item.getDescription());
-                return;
+                return null;
             }
             
             stream.println("You can't find a " + params + " here.");
-            return;
+            return null;
         }),
         new Command("take", "pick up an item", (player, params, stream) -> {
             if(params == null) {
                 stream.println("What do you want to take?");
-                return;
+                return null;
             }
             Item item = player.getCurrentRoom().takeItemIfPresent(params);
             if(item == null) {
@@ -51,10 +51,11 @@ public class Command {
                 } else {
                     stream.println("There is no " + params + " here.");
                 }
-                return;
+                return null;
             }
             player.addItem(item);
             stream.println("You took the " + params + ".");
+            return null;
         }),
         new Command("inventory", "see the items in your inventory", (player, params, stream) -> {
             ArrayList<Item> inventory = player.getInventory();
@@ -65,41 +66,44 @@ public class Command {
             for(Item i : inventory) {
                 stream.println(i.getName());
             }
+            return null;
         }),
         new Command("enter", "go to another room by entering a passage", (player, params, stream) -> {
             if(params == null) {
                 stream.println("Where do you want to go?");
-                return;
+                return null;
             }
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
             if(interaction == null) {
                 stream.println("There is no " + params + " here.");
-                return;
+                return null;
             }
             if(interaction instanceof DoorInteraction) {
                 Room targetRoom = ((DoorInteraction) interaction).getRoom();
                 player.setCurrentRoom(targetRoom);
                 stream.println("You entered the " + params + ".");
                 targetRoom.printDescription(stream);
-                return;
+                return null;
             }
             stream.println("You can't enter that.");
+            return null;
         }),
         new Command("talk", "talk to someone", (player, params, stream) -> {
             if(params == null) {
                 stream.println("Who do you want to talk to?");
-                return;
+                return null;
             }
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
             if(interaction == null) {
                 stream.println(params + " is not here.");
-                return;
+                return null;
             }
             if(interaction instanceof NPCInteraction) {
                 ((NPCInteraction) interaction).talk(player, stream);
-                return;
+                return null;
             }
             stream.println("*no answer*");
+            return null;
         }),
         new Command("help", "get a list of all available commands", (player, params, stream) -> {
             stream.println("You can use the following commands:");
@@ -108,11 +112,12 @@ public class Command {
                 stream.print(" - ");
                 stream.println(c.description);
             }
+            return null;
         }),
         new Command("give", "give an item from your inventory to someone", (player, params, stream) -> {
             if(params == null) {
                 stream.println("What do you want to give? And to whom?");
-                return;
+                return null;
             }
             
             // split command into item name and reciever
@@ -128,28 +133,29 @@ public class Command {
             }
             if(item == null) {
                 stream.println("You don't have that item.");
-                return;
+                return null;
             }
             
             // check if npc exists
             if(parts.length < 2) {
                 stream.println("Whom do you want to give that to?");
-                return;
+                return null;
             }
             Interaction interaction = player.getCurrentRoom().getInteraction(parts[1]);
             if(interaction == null) {
                 stream.println(parts[1] + " is not here.");
-                return;
+                return null;
             }
             if(!(interaction instanceof NPCInteraction)) {
                 stream.println("You can't give items to that.");
-                return;
+                return null;
             }
             
             // give item to npc
             if(((NPCInteraction) interaction).give(player, item, stream)) {
                 player.getInventory().remove(item);
             }
+            return null;
         })
     };
     
@@ -184,11 +190,14 @@ public class Command {
     }
     
     protected void execute(Player player, String params, PrintStream stream) {
-        function.execute(player, params, stream);
+        String additionalText = function.execute(player, params, stream);
+        if(additionalText != null) {
+            stream.println(additionalText);
+        }
     }
     
     @FunctionalInterface
     private static interface CommandFunction {
-        public void execute(Player player, String params, PrintStream stream);
+        public String execute(Player player, String params, PrintStream stream);
     }
 }

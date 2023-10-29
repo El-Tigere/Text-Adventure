@@ -108,6 +108,48 @@ public class Command {
                 stream.print(" - ");
                 stream.println(c.description);
             }
+        }),
+        new Command("give", "give an item from your inventory to someone", (player, params, stream) -> {
+            if(params == null) {
+                stream.println("What do you want to give? And to whom?");
+                return;
+            }
+            
+            // split command into item name and reciever
+            String[] parts = params.split(" to ", 2);
+            
+            // check if player has item
+            Item item = null;
+            for(Item i : player.getInventory()) {
+                if(i.getName().equals(parts[0])) {
+                    item = i;
+                    break;
+                }
+            }
+            if(item == null) {
+                stream.println("You don't have that item.");
+                return;
+            }
+            
+            // check if npc exists
+            if(parts.length < 2) {
+                stream.println("Whom do you want to give that to?");
+                return;
+            }
+            Interaction interaction = player.getCurrentRoom().getInteraction(parts[1]);
+            if(interaction == null) {
+                stream.println(parts[1] + " is not here.");
+                return;
+            }
+            if(!(interaction instanceof NPCInteraction)) {
+                stream.println("You can't give items to that.");
+                return;
+            }
+            
+            // give item to npc
+            if(((NPCInteraction) interaction).give(player, item, stream)) {
+                player.getInventory().remove(item);
+            }
         })
     };
     

@@ -61,18 +61,19 @@ public class Command {
         new Command("enter", "go to another room by entering a passage", (player, params, stream) -> {
             if(params == null) return "Where do you want to go?";
             
+            // get Interaction
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
             if(interaction == null) return "There is no " + params + " here.";
             
-            if(interaction instanceof DoorInteraction) {
-                Room targetRoom = ((DoorInteraction) interaction).getRoom();
-                player.setCurrentRoom(targetRoom);
-                stream.println("You entered the " + params + ".");
-                targetRoom.printDescription(stream);
-                return null;
-            }
+            // check if Interaction is DoorInteraction
+            if(!(interaction instanceof DoorInteraction)) return "You can't enter that.";
             
-            return "You can't enter that.";
+            // enter room
+            Room targetRoom = ((DoorInteraction) interaction).getRoom();
+            player.setCurrentRoom(targetRoom);
+            stream.println("You entered the " + params + ".");
+            targetRoom.printDescription(stream);
+            return null;
         }),
         new Command("talk", "talk to someone", (player, params, stream) -> {
             if(params == null) return "Who do you want to talk to?";

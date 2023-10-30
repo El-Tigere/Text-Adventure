@@ -39,17 +39,13 @@ public class Command {
             if(params == null) return "What do you want to take?";
             
             Item item = player.getCurrentRoom().takeItemIfPresent(params);
-            if(item == null) {
-                if(player.getCurrentRoom().getInteraction(params) != null) {
-                    stream.println("You can't pick that up.");
-                } else {
-                    stream.println("There is no " + params + " here.");
-                }
-                return null;
+            if(item != null) {
+                player.getInventory().add(item);
+                return "You took the " + params + ".";
             }
             
-            player.getInventory().add(item);
-            return "You took the " + params + ".";
+            if(player.getCurrentRoom().getInteraction(params) != null) return "You can't pick that up.";
+            return "There is no " + params + " here.";
         }),
         new Command("inventory", "see the items in your inventory", (player, params, stream) -> {
             ArrayList<Item> inventory = player.getInventory();

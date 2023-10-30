@@ -31,19 +31,13 @@ public class Command {
                     break;
                 }
             }
-            if(item != null) {
-                stream.println(item.getDescription());
-                return null;
-            }
+            if(item != null) return item.getDescription();
             
-            stream.println("You can't find a " + params + " here.");
-            return null;
+            return "You can't find a " + params + " here.";
         }),
         new Command("take", "pick up an item", (player, params, stream) -> {
-            if(params == null) {
-                stream.println("What do you want to take?");
-                return null;
-            }
+            if(params == null) return "What do you want to take?";
+            
             Item item = player.getCurrentRoom().takeItemIfPresent(params);
             if(item == null) {
                 if(player.getCurrentRoom().getInteraction(params) != null) {
@@ -53,9 +47,9 @@ public class Command {
                 }
                 return null;
             }
+            
             player.getInventory().add(item);
-            stream.println("You took the " + params + ".");
-            return null;
+            return "You took the " + params + ".";
         }),
         new Command("inventory", "see the items in your inventory", (player, params, stream) -> {
             ArrayList<Item> inventory = player.getInventory();
@@ -69,15 +63,11 @@ public class Command {
             return null;
         }),
         new Command("enter", "go to another room by entering a passage", (player, params, stream) -> {
-            if(params == null) {
-                stream.println("Where do you want to go?");
-                return null;
-            }
+            if(params == null) return "Where do you want to go?";
+            
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
-            if(interaction == null) {
-                stream.println("There is no " + params + " here.");
-                return null;
-            }
+            if(interaction == null) return "There is no " + params + " here.";
+            
             if(interaction instanceof DoorInteraction) {
                 Room targetRoom = ((DoorInteraction) interaction).getRoom();
                 player.setCurrentRoom(targetRoom);
@@ -85,25 +75,21 @@ public class Command {
                 targetRoom.printDescription(stream);
                 return null;
             }
-            stream.println("You can't enter that.");
-            return null;
+            
+            return "You can't enter that.";
         }),
         new Command("talk", "talk to someone", (player, params, stream) -> {
-            if(params == null) {
-                stream.println("Who do you want to talk to?");
-                return null;
-            }
+            if(params == null) return "Who do you want to talk to?";
+            
             Interaction interaction = player.getCurrentRoom().getInteraction(params);
-            if(interaction == null) {
-                stream.println(params + " is not here.");
-                return null;
-            }
+            if(interaction == null) return params + " is not here.";
+            
             if(interaction instanceof NPCInteraction) {
                 ((NPCInteraction) interaction).talk(player, stream);
                 return null;
             }
-            stream.println("*no answer*");
-            return null;
+            
+            return "*no answer*";
         }),
         new Command("help", "get a list of all available commands", (player, params, stream) -> {
             stream.println("You can use the following commands:");
@@ -115,10 +101,7 @@ public class Command {
             return null;
         }),
         new Command("give", "give an item from your inventory to someone", (player, params, stream) -> {
-            if(params == null) {
-                stream.println("What do you want to give? And to whom?");
-                return null;
-            }
+            if(params == null) return "What do you want to give? And to whom?";
             
             // split command into item name and reciever
             String[] parts = params.split(" to ", 2);
@@ -131,25 +114,13 @@ public class Command {
                     break;
                 }
             }
-            if(item == null) {
-                stream.println("You don't have that item.");
-                return null;
-            }
+            if(item == null) return "You don't have that item.";
             
             // check if npc exists
-            if(parts.length < 2) {
-                stream.println("Whom do you want to give that to?");
-                return null;
-            }
+            if(parts.length < 2) return "Whom do you want to give that to?";
             Interaction interaction = player.getCurrentRoom().getInteraction(parts[1]);
-            if(interaction == null) {
-                stream.println(parts[1] + " is not here.");
-                return null;
-            }
-            if(!(interaction instanceof NPCInteraction)) {
-                stream.println("You can't give items to that.");
-                return null;
-            }
+            if(interaction == null) return parts[1] + " is not here.";
+            if(!(interaction instanceof NPCInteraction)) return "You can't give items to that.";
             
             // give item to npc
             if(((NPCInteraction) interaction).give(player, item, stream)) {
